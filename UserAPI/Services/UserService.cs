@@ -46,7 +46,7 @@ namespace UserAPI.Services
             if (escolaridadeValidation < 0)
             {
                 _log.LogError(UserConstants.DateErrorMessage);
-                return new AddUserResponse() { Mensagem = UserConstants.DateErrorMessage };
+                return new AddUserResponse() { Mensagem = UserConstants.EscolaridadeErrorMessage };
             }
             var newUser = new User()
             {
@@ -123,7 +123,6 @@ namespace UserAPI.Services
 
         public EditUserResponse EditUser(User editedUser)
         {
-            
             var editResponse = new EditUserResponse() { EditedUser = editedUser };
             try
             {
