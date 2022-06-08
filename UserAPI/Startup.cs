@@ -27,6 +27,7 @@ namespace UserAPI
 {
     public class Startup
     {
+        string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -56,6 +57,17 @@ namespace UserAPI
                     );
             });
             services.AddLogging(configure => configure.AddConsole());
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("http://localhost:4200",
+                                                          "*").AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                                  });
+            });
 
             var escolaridades = new Escolaridade(Configuration.GetSection("Application:Escolaridades").Value);
             services.AddSingleton(escolaridades);
@@ -85,7 +97,7 @@ namespace UserAPI
 
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

@@ -18,7 +18,7 @@ namespace UserAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [EnableCors("UserPolicy")]
+    [EnableCors]
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
@@ -42,7 +42,7 @@ namespace UserAPI.Controllers
             return _userService.AddUser(newUserRequest);
 
         }
-        [HttpDelete]
+        [HttpPost]
         [Route("delete")]
         public ActionResult<DeleteUserResponse> Delete([FromBody] DeleteUserRequest deleteUserRequest)
         {
